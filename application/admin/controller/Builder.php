@@ -246,7 +246,7 @@ EOT;
         $form = $builder->form();
 
         $form->mdreader('自由布局，渲染模板，使用树行结构')->value($demo3)->size(12, 12); //markdown 展示
-        $form->raw('demo1', ' ')->showLabel(false)->value('<a onclick="top.$.fn.multitabs().create(this, true);return false;" href="' . url('demo/demo3') . '">点此查看【自由布局实例】</a>');
+        $form->raw('demo3', ' ')->showLabel(false)->value('<a onclick="top.$.fn.multitabs().create(this, true);return false;" href="' . url('demo/demo3') . '">点此查看【自由布局实例】</a>');
 
         $form->mdreader('demo3html', 'admin/view/demo/demo3.html')->size(12, 12)->value('```html' . "\n" . view('/demo/demo3')->getContent() . "\n" . '```');
         $form->mdreader('demo33html', 'admin/view/demo/demo33.html')->size(12, 12)->value('```html' . "\n" . view('/demo/demo33', ['name' => 'col-md-4', 'data' => json_encode(['colors' => ['红色', '蓝色', '橙色'], 'datas' => [300, 50, 100]])])->getContent() . "\n" . '```');
@@ -259,11 +259,87 @@ EOT;
 
     public function useDisplay()
     {
+        $demo4 = <<<EOT
+```php
+<?php
+namespace app\admin\controller;
 
+use tpext\builder\common\Builder；
+use think\Controller;
+
+class Demo extends Controller
+{
+    public function demo4()
+    {
+        \$builder = Builder::getInstance('builer', 'display');
+
+        \$builder->content()->display('<div style="widht:100%;margin-top:10px;border:1px dashed red;">{\$desc}<img src="https://gitee.com/ichynul/myadmin/widgets/widget_card.svg?colors=393222,ebdfc1,fffae5,d8ca9f,393222,a28b40" ></div>', ['desc' => '\$builder->content->display(\'\')的内容']);
+
+        \$form = \$builder->form();
+
+        \$form->text('name', '姓名');
+        \$form->html('demo', 'Demo')->display('<div style="widht:100%;margin-top:10px;border:1px dashed blue;">{\$desc}</div>年龄：<input class="form-control" name="age" value="18" />', ['desc' => '\$form->html()->display(\'\')的内容']);
+        \$form->textarea('about', '简介');
+        \$form->action(url('demo1Post'));
+
+        return \$builder->render();
+    }
+｝
+```
+EOT;
+
+        $builder = Bd::getInstance('Builder', 'display');
+
+        $form = $builder->form();
+
+        $form->mdreader('使用display')->value($demo4)->size(12, 12); //markdown 展示
+        $form->raw('demo4', ' ')->showLabel(false)->value('<a onclick="top.$.fn.multitabs().create(this, true);return false;" href="' . url('demo/demo4') . '">点此查看【使用display实例】</a>');
+
+        $form->bottomButtons(false); //仅显示，不需要表单提交按钮
+
+        return $builder->render();
     }
 
     public function useFetch()
     {
+        $demo5 = <<<EOT
+```php
+<?php
+namespace app\admin\controller;
 
+use tpext\builder\common\Builder；
+use think\Controller;
+
+class Demo extends Controller
+{
+    public function demo5()
+    {
+        \$builder = Builder::getInstance('builer', 'fetch');
+
+        \$builder->content()->fetch('/demo/demo3');
+
+        \$form = \$builder->form();
+
+        \$form->text('name', '姓名');
+        \$form->html('demo', 'Demo')->fetch('/demo/demo33', ['name' => '\$form->html(\'demo', 'Demo\')->fetch(\'/demo/demo33\');', 'data' => json_encode(['colors' => ['红色', '蓝色', '橙色'], 'datas' => [300, 50, 100]])]);
+        \$form->textarea('about', '简介');
+        \$form->action(url('demo1Post'));
+
+        return \$builder->render();
+    }
+｝
+```
+EOT;
+
+        $builder = Bd::getInstance('Builder', 'fetch');
+
+        $form = $builder->form();
+
+        $form->mdreader('使用fetch')->value($demo5)->size(12, 12); //markdown 展示
+        $form->raw('demo5', ' ')->showLabel(false)->value('<a onclick="top.$.fn.multitabs().create(this, true);return false;" href="' . url('demo/demo5') . '">点此查看【使用fetch实例】</a>');
+
+        $form->bottomButtons(false); //仅显示，不需要表单提交按钮
+
+        return $builder->render();
     }
 }

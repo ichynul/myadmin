@@ -162,6 +162,38 @@ class Demo extends Controller
         return $builder->render();
     }
 
+    public function demo4()
+    {
+        $builder = Builder::getInstance('builer', 'display');
+
+        $builder->content()->display('<div style="widht:100%;margin-top:10px;border:1px dashed red;">{$desc}<img src="https://gitee.com/ichynul/myadmin/widgets/widget_card.svg?colors=393222,ebdfc1,fffae5,d8ca9f,393222,a28b40" ></div>', ['desc' => '$builder->content->display(\'\')的内容']);
+
+        $form = $builder->form();
+
+        $form->text('name', '姓名');
+        $form->html('demo', 'Demo')->display('<div style="widht:100%;margin-top:10px;border:1px dashed blue;">{$desc}</div>年龄：<input class="form-control" name="age" value="18" />', ['desc' => '$form->html()->display(\'\')的内容']);
+        $form->textarea('about', '简介');
+        $form->action(url('demo1Post'));
+
+        return $builder->render();
+    }
+
+    public function demo5()
+    {
+        $builder = Builder::getInstance('builer', 'fetch');
+
+        $builder->content()->fetch('/demo/demo3');
+
+        $form = $builder->form();
+
+        $form->text('name', '姓名');
+        $form->html('demo', 'Demo')->fetch('/demo/demo33', ['name' => '$form->html(\'demo\', \'Demo\')->fetch(\'/demo/demo33\');', 'data' => json_encode(['colors' => ['红色', '蓝色', '橙色'], 'datas' => [300, 50, 100]])]);
+        $form->textarea('about', '简介');
+        $form->action(url('demo1Post'));
+
+        return $builder->render();
+    }
+
     public function add()
     {
         return $this->demo1();
