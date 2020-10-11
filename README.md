@@ -56,6 +56,8 @@ composer require ichynul/tpextmyadmin:^3.0.0
 ## 六、演示
 #### 网址：
 1. [tp5.1] <http://quick.shenzhuo.vip:10582/admin>　
+2. [tp6.0] <http://tpext.shenzhuo.vip:10582/admin>　
+
 #### 账号：
 `admin`：`tpextadmin`
 
